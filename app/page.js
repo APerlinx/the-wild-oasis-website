@@ -1,5 +1,7 @@
-import Image from 'next/image'
-
 export default function Page() {
-  return <h1>Hello next!</h1>
+  return (
+    <div>
+      <h1>The wild oasis WEBSITE</h1>
+    </div>
+  )
 }
