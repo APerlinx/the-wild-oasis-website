@@ -1,14 +1,21 @@
-import Logo from './components/Logo'
-import Navigation from './components/Navigation'
+import '@/app/_styles/globals.css'
+
+import Logo from '@/app/_components/Logo'
+import Navigation from '@/app/_components/Navigation'
 
 export const metadata = {
-  title: 'The Wild Oasis',
+  title: {
+    template: '%s / The Wild Oasis',
+    default: 'Welcome /  The Wild Oasis',
+  },
+  description:
+    'Luxurios cabin hotel, located in the heart of the italian Dolomites, surronded by beautiful mountains and green forests',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-primary-950 text-primary-100 min-h-screen">
         <header>
           <Logo />
         </header>

@@ -1,3 +1,7 @@
+export const metadata = {
+  title: 'Guest Lounge',
+}
+
 export default function Page() {
   return (
     <div>
