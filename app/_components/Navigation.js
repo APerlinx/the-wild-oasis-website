@@ -25,7 +25,7 @@ export default function Navigation() {
             href="/account"
             className="hover:text-accent-400 transition-colors"
           >
-            Guest area
+            Guest lounge
           </Link>
         </li>
       </ul>
