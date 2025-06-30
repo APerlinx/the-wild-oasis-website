@@ -1,3 +1,5 @@
+import Spinner from '@/app/_components/Spinner'
+
 export default function LoadBindings() {
-  return <p>LOADING DATA...</p>
+  return <Spinner />
 }
