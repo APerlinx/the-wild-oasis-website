@@ -1,6 +1,8 @@
-import { isWithinInterval } from "date-fns";
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
+'use client'
+
+import { isWithinInterval } from 'date-fns'
+import { DayPicker } from 'react-day-picker'
+import 'react-day-picker/dist/style.css'
 
 function isAlreadyBooked(range, datesArr) {
   return (
@@ -9,20 +11,20 @@ function isAlreadyBooked(range, datesArr) {
     datesArr.some((date) =>
       isWithinInterval(date, { start: range.from, end: range.to })
     )
-  );
+  )
 }
 
-function DateSelector() {
+function DateSelector({ settings, bookedDates, cabin }) {
   // CHANGE
-  const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
-  const range = { from: null, to: null };
+  const regularPrice = 23
+  const discount = 23
+  const numNights = 23
+  const cabinPrice = 23
+  const range = { from: null, to: null }
 
   // SETTINGS
-  const minBookingLength = 1;
-  const maxBookingLength = 23;
+
+  const { maxBookingLength, minBookingLength } = settings
 
   return (
     <div className="flex flex-col justify-between">
@@ -31,11 +33,24 @@ function DateSelector() {
         mode="range"
         min={minBookingLength + 1}
         max={maxBookingLength}
-        fromMonth={new Date()}
-        fromDate={new Date()}
-        toYear={new Date().getFullYear() + 5}
+        startMonth={new Date()}
+        hidden={{ before: new Date() }}
+        endMonth={new Date(new Date().getFullYear() + 5, 0)}
         captionLayout="dropdown"
-        numberOfMonths={2}
+        numberOfMonths={1}
+        // disableNavigation
+        modifiersClassNames={{
+          selected: 'bg-accent-600 text-white rounded-sm',
+          today: 'text-accent-500',
+          range_start: 'bg-accent-600 text-white rounded-sm',
+          range_end: 'bg-accent-600 text-white rounded-sm',
+          range_middle: 'bg-accent-100 text-black',
+        }}
+        classNames={{
+          chevron: 'fill-accent-500',
+          years_dropdown: 'text-black',
+          months_dropdown: 'text-black',
+        }}
       />
 
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
@@ -59,7 +74,7 @@ function DateSelector() {
                 <span>&times;</span> <span>{numNights}</span>
               </p>
               <p>
-                <span className="text-lg font-bold uppercase">Total</span>{" "}
+                <span className="text-lg font-bold uppercase">Total</span>{' '}
                 <span className="text-2xl font-semibold">${cabinPrice}</span>
               </p>
             </>
@@ -76,7 +91,7 @@ function DateSelector() {
         ) : null}
       </div>
     </div>
-  );
+  )
 }
 
-export default DateSelector;
+export default DateSelector
