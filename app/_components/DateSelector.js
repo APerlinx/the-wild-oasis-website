@@ -1,7 +1,6 @@
 'use client'
 
 import { isWithinInterval } from 'date-fns'
-import { useContext } from 'react'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/dist/style.css'
 import { useReservation } from './ReservationContext'
