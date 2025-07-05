@@ -14,7 +14,7 @@ function Logo() {
       /> */}
       <div className="h-16"></div>
 
-      <span className="text-2xl font-semibold text-primary-100">
+      <span className="text-2xl text-primary-100 font-serif ">
         The Wild Oasis
       </span>
     </Link>
