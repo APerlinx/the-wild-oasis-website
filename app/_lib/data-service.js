@@ -1,6 +1,7 @@
 import { eachDayOfInterval } from 'date-fns'
 import { supabase } from './supabase'
 import { notFound } from 'next/navigation'
+import { auth } from './auth'
 
 export async function getCabin(id) {
   const { data, error } = await supabase
@@ -164,20 +165,5 @@ export async function createBooking(newBooking) {
     throw new Error('Booking could not be created')
   }
 
-  return data
-}
-
-export async function updateBooking(id, updatedFields) {
-  const { data, error } = await supabase
-    .from('bookings')
-    .update(updatedFields)
-    .eq('id', id)
-    .select()
-    .single()
-
-  if (error) {
-    console.error(error)
-    throw new Error('Booking could not be updated')
-  }
   return data
 }
