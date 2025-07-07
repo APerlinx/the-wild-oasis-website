@@ -1,40 +1,39 @@
 'use client'
 
-import { isWithinInterval } from 'date-fns'
+import { differenceInDays, isPast, isSameDay, isWithinInterval } from 'date-fns'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/dist/style.css'
 import { useReservation } from './ReservationContext'
 
 function isAlreadyBooked(range, datesArr) {
   return (
-    range.from &&
-    range.to &&
+    range?.from &&
+    range?.to &&
     datesArr.some((date) =>
-      isWithinInterval(date, { start: range.from, end: range.to })
+      isWithinInterval(date, { start: range?.from, end: range?.to })
     )
   )
 }
 
 function DateSelector({ settings, bookedDates, cabin }) {
   const { range, setRange, resetRange } = useReservation()
-  // CHANGE
-  const regularPrice = 23
-  const discount = 23
-  const numNights = 23
-  const cabinPrice = 23
-
-  // SETTINGS
+  const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range
+  const { regularPrice, discount } = cabin
+  const numNights =
+    displayRange?.from && displayRange?.to
+      ? differenceInDays(displayRange.to, displayRange.from)
+      : 0
+  const cabinPrice = numNights * (regularPrice - discount)
 
   const { maxBookingLength, minBookingLength } = settings
-
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
         onSelect={(range) => setRange(range)}
-        selected={range}
-        min={minBookingLength + 1}
+        selected={displayRange}
+        min={minBookingLength}
         max={maxBookingLength}
         startMonth={new Date()}
         hidden={{ before: new Date() }}
@@ -42,6 +41,10 @@ function DateSelector({ settings, bookedDates, cabin }) {
         captionLayout="dropdown"
         numberOfMonths={1}
         // disableNavigation
+        disabled={(currDate) =>
+          isPast(currDate) ||
+          bookedDates.some((date) => isSameDay(date, currDate))
+        }
         modifiersClassNames={{
           selected: 'bg-accent-600 text-white rounded-sm',
           today: 'text-accent-500',
@@ -85,7 +88,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
             onClick={resetRange}
