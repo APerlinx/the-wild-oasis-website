@@ -1,6 +1,8 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { auth, signIn, signOut } from './auth'
+import { supabase } from './supabase'
 
 export async function signInAction() {
   await signIn('google', { redirectTo: '/account' })
@@ -19,5 +21,12 @@ export async function updateGuest(formData) {
     throw new Error('Please provie valid nationail ID')
 
   const updateData = { nationality, countryFlag, nationalID }
-  console.log(updateData)
+
+  const { data, error } = await supabase
+    .from('guests')
+    .update(updateData)
+    .eq('id', session.user.guestId)
+
+  if (error) throw new Error('Guest could not be updated')
+  revalidatePath('/account/profile')
 }
