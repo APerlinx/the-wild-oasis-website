@@ -26,4 +26,6 @@ A modern fullstack hotel reservation system built with the **Next.js App Router*
 - **Database:** Supabase PostgreSQL
 - **Deployment Ready:** Works with Vercel/Supabase out of the box
 
+---
 
+MIT License © 2025 Alon Perlin
